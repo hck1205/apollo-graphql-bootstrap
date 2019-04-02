@@ -1,0 +1,29 @@
+{
+  "name": "express-graphql-bootstrap",
+  "version": "1.0.0",
+  "description": "express-graphql-bootstrap",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hck1205/express-graphql-bootstrap.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hck1205/express-graphql-bootstrap/issues"
+  },
+  "homepage": "https://github.com/hck1205/express-graphql-bootstrap#readme",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.4",
+    "express-graphql": "^0.7.1",
+    "graphql": "^14.2.1"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.10"
+  }
+}
