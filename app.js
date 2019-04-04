@@ -1,7 +1,10 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const graphqlHttp = require('express-graphql'); // middleware that take incoming api
-const { buildSchema } = require('graphql');
+const mongoose = require('mongoose');
+
+const graphQlSchema = require('./graphql/schema/index');
+const graphQlResolvers = require('./graphql/resolvers/index');
 
 const app = express();
 
@@ -9,32 +12,21 @@ app.use(bodyParser.json());
 
 app.use('/graphql',
   graphqlHttp({
-    schema: buildSchema(`
-      type RootQuery {
-        events: [String!]!
-      }
-      
-      type RootMutation {
-        createEvent(name: String): String
-      }
-      
-      schema {
-        query: RootQuery
-        mutation: RootMutation
-      }
-          
-    `),
-    rootValue: {
-      events: () => {
-        return ['Romantic Cooking', 'Sailing', 'All-Night Coding'];
-      },
-      createEvent: (args) => {
-        const eventName = args.name;
-        return eventName;
-      }
-    },
+    schema: graphQlSchema,
+    rootValue: graphQlResolvers,
     graphiql: true
   })
 );
 
-app.listen(3000);
+mongoose
+  .connect(
+  `mongodb+srv://${process.env.MONGO_USER}:${
+    process.env.MONGO_PASSWORD
+  }@cluster0-kisww.mongodb.net/${process.env.MONGO_DB}?retryWrites=true`, {
+    useNewUrlParser: true
+  }).then(() => { // if success
+    app.listen(3000);
+  }).catch(err => {
+    console.log(err);
+  });
+
